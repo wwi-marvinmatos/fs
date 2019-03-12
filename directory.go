@@ -6,7 +6,19 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+
+	homedir "github.com/mitchellh/go-homedir"
 )
+
+func getHome() string {
+	// Find home directory.
+	home, err := homedir.Dir()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	return home
+}
 
 func scanFolder(dirname string) {
 	var files []string
