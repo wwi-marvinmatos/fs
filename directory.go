@@ -5,7 +5,37 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
+
+	homedir "github.com/mitchellh/go-homedir"
 )
+
+func getHome() string {
+	// Find home directory.
+	home, err := homedir.Dir()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	return home
+}
+
+func scanFolder(dirname string) {
+	var files []string
+
+	root := "upload/iam"
+	root = dirname
+	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		files = append(files, path)
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+	for _, file := range files {
+		fmt.Println(file)
+	}
+}
 
 // ReadFilesInInputDir function is used to list the files in a given directory passed in by the user
 func ReadFilesInInputDir(dir string) {
