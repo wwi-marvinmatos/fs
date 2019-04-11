@@ -29,10 +29,11 @@ func isError(err error) bool {
 	return (err != nil)
 }
 
-func CreateAndWriteFile(str, path string) {
-	CreateFile(path)
-	WriteFile(str, path)
-}
+// // CreateAndWriteFile funtion is a helper for creating a file and writing to it
+// func CreateAndWriteFile(str, path string) {
+// 	CreateFile(path)
+// 	WriteFile(str, path)
+// }
 
 // createFile function is used to create a file given the save path
 func CreateFile(path string) {
@@ -96,6 +97,16 @@ func writeExecutableFile(str, path string) {
 	}
 
 	fmt.Println("==> done writing to file ", path)
+}
+
+// Exists reports whether the named file or directory exists, returning a boolean.
+func Exists(name string) bool {
+	if _, err := os.Stat(name); err != nil {
+		if os.IsNotExist(err) {
+			return false
+		}
+	}
+	return true
 }
 
 // ReadFile function is used read a given file
